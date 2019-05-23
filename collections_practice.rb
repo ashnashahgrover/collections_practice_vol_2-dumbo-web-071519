@@ -49,26 +49,68 @@ def find_cool(array)
   cool 
 end 
 
-    
-
-
-
-
-
-
 require 'pry'
 
 def count_elements(array)
-  counts = []
-  array.each do |x|
-   number = array.count(x)
-   hash = {x, :count => number}
-   counts.push(hash)
-  end
-  counts 
-  binding.pry
+  array.each do |hash|
+      hash[:count] = 0
+      name = hash[:name]
+      array.each do |hash_again|
+        if hash_again[:name] == name 
+          hash[:count] += 1
+        end 
+      end
+  end.uniq
 end 
-    
 
+def merge_data(keys, data)
+  keys.each do |hash| 
+    data.each do |giant_hash|
+      giant_hash.each do |name, info|
+        if name == hash[:first_name]
+          hash.merge!(info)
+        end
+      end 
+    end 
+  end
+end 
+
+def organize_schools(schools)
+  cities = {}
+  schools.each do |school_name, location_info|
+    location_info.each do |key, city_name|
+      cities[city_name] = []
+      schools.each do |school, location|
+        location.each do |key, city|
+          if city_name == city
+            cities[city_name] << school
+          end 
+        end 
+      end
+    end 
+  end 
+  cities 
+end 
+
+organize_schools({
+      "flatiron school bk" => {
+        :location => "NYC"
+      },
+      "flatiron school" => {
+        :location => "NYC"
+      },
+      "dev boot camp" => {
+        :location => "SF"
+      },
+      "dev boot camp chicago" => {
+        :location => "Chicago"
+      },
+      "general assembly" => {
+        :location => "NYC"
+      },
+      "Hack Reactor" => {
+        :location => "SF"
+      }
+    })
 
 
